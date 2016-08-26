@@ -5,7 +5,75 @@
     <title>Travel Buddy</title>
   </head>
   <body>
-    <h1>User</h1>
+    <h2>Hello, {{user.name}}!</h2>
+    <h3>Your Trip Schedules</h3>
+
+    <table>
+       <thead>
+         <tr>
+           <th>Destination</th>
+           <th>Travel Start Date</th>
+           <th>Travel End Date</th>
+           <th>Plan</th>
+         </tr>
+       </thead>
+       <tbody>
+          {% for travel in travels %}
+             <tr>
+               <th>{{travel.destination}}</th>
+      				 <th>{{travel.start}}</th>
+               <th>{{travel.end}}</th>
+               <th>{{travel.plan }}</th>
+             </tr>
+          {% endfor %}
+          {%  for join in joins %}
+            <tr>
+              <th>{{join.id}}</th>
+              <th>{{join.travel_id}}</th>
+              <th>{{join.travel_id.destination}}</th>
+              <th>{{join.travel_id.start}}</th>
+              <th>{{join.travel_id.end}}</th>
+              <th>{{join.travel_id.plan }}</th>
+            </tr>
+          {% endfor %}
+       </tbody>
+    </table>
+
+    
+
+    <a href="{% url 'add'%}">Add Travel Plan</a>
+
+
+    <h3>Other User's Travel Plans</h3>
+    <table>
+        <thead>
+           <tr>
+             <th>Name</th>
+             <th>Destination</th>
+             <th>Travel Start Date</th>
+             <th>Travel End Date</th>
+             <th>Plan</th>
+             <th>Do you want to join?</th>
+           </tr>
+        </thead>
+        <tbody>
+            {%  for plan in other %}
+              {% if plan.user_id.id != request.session.user %}
+                 <tr>
+                   <th>{{plan.user_id.name}}</th>
+                   <th><a href="{% url 'travel' travel_id=plan.id%}">{{plan.destination}}</a></th>
+                   <th>{{plan.start}}</th>
+                   <th>{{plan.end}}</th>
+                   <th>{{plan.plan }}</th>
+                   <th><a href="">Join</a></th>
+                 </tr>
+               {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+    <a href="{% url 'logout'%}">Logout</a>
 
   </body>
 </html>
