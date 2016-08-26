@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
-# from django.db.models import Count
 from models import User, Travel, Join
 import bcrypt
 from datetime import date
@@ -12,19 +11,16 @@ def index(request):
 
 def user(request):
     user = User.objects.get(id = request.session['user'])
-    other = Travel.objects.all().order_by('start')
     travels = Travel.objects.filter(user_id = request.session['user'])
-
     joins = Join.objects.filter(user_id = request.session['user'])
-
-
-
+    other = Travel.objects.exclude(join_travel__user_id_id = request.session['user']).order_by('start')
     context = {'travels':travels, 'user':user, 'other':other, 'joins': joins}
     return render(request, 'travel_plan/user.html', context)
 
 def travel(request, travel_id):
     travel = Travel.objects.get(id = travel_id)
-    context = {'travel':travel}
+    joins = Join.objects.filter(travel_id = travel_id)
+    context = {'travel':travel, 'joins':joins}
     return render(request, 'travel_plan/travel.html', context)
 
 def add(request):
@@ -32,9 +28,6 @@ def add(request):
     format_time = today.strftime('%Y-%m-%d')
     context = {'time':format_time}
     return render(request, 'travel_plan/add.html', context)
-
-
-
 
 def register_process(request):
     result = User.manager.validateReg(request)
@@ -73,7 +66,7 @@ def add_travel(request):
     if len(request.POST['destination']) < 1:
         errors.append('Destination can not be empty')
     if len(request.POST['plan']) < 1:
-        errors.append('Plan can not be empty')
+        errors.append('Description can not be empty')
     if len(request.POST['start']) < 1:
         errors.append('Travel Date From can not be empty')
     if len(request.POST['end']) < 1:
@@ -89,10 +82,7 @@ def add_travel(request):
     return redirect(reverse('user'))
 
 def join(request, travel_id):
-
     user = User.objects.get(id = request.session['user'])
-    travel = User.objects.get(id = request.session['user'])
-
+    travel = Travel.objects.get(id = travel_id)
     join = Join.objects.create(travel_id = travel, user_id = user)
-
     return redirect(reverse('user'))

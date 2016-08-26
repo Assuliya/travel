@@ -10,12 +10,13 @@
     <p>Description: {{travel.plan}}</p>
     <p>Travel Date From: {{travel.start}}</p>
     <p>Travel Date To: {{travel.end}}</p>
-
     <h3>Other user's joining the trip</h3>
-
+    {%  for join in joins %}
+      {% if request.session.user != join.user_id.id%}
+        <p>{{join.user_id.name}}</p>
+      {% endif %}
+    {% endfor %}
     <a href="{% url 'user'%}">Home</a>
     <a href="{% url 'logout'%}">Logout</a>
-
-
   </body>
 </html>

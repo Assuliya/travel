@@ -5,7 +5,7 @@
     <title>Travel Buddy</title>
   </head>
   <body>
-    <h1>Add</h1>
+    <h2>Add a Trip</h2>
     {% if messages %}
         <div class="errors">
           {% for message in messages %}
@@ -16,7 +16,7 @@
     <form action="{% url 'add_travel' %}" method='post'>
        {% csrf_token %}
        Destination: <input type="text" name="destination">
-       Plan: <input type="text" name="plan">
+       Description: <input type="text" name="plan">
        Travel Date From: <input type="date" name="start" min="{{time}}">
        Travel Date To: <input type="date" name="end" min="{{time}}">
        <input type="submit" value="Add">

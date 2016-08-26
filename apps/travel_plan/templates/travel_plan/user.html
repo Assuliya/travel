@@ -7,7 +7,6 @@
   <body>
     <h2>Hello, {{user.name}}!</h2>
     <h3>Your Trip Schedules</h3>
-
     <table>
        <thead>
          <tr>
@@ -18,38 +17,26 @@
          </tr>
        </thead>
        <tbody>
-
           {% for travel in travels %}
              <tr>
-               <th>{{travel.destination}}</th>
+               <th><a href="{% url 'travel' travel_id=travel.id%}">{{travel.destination}}</th>
       				 <th>{{travel.start}}</th>
                <th>{{travel.end}}</th>
                <th>{{travel.plan }}</th>
              </tr>
           {% endfor %}
-
-
-
-
           {%  for join in joins %}
             <tr>
-              <th>{{join.id}}</th>
-              <th>{{join.travel_id}}</th>
-              <th>{{join.travel_id.destination}}</th>
+              <th><a href="{% url 'travel' travel_id=join.travel_id.id%}">{{join.travel_id.destination}}</a></th>
               <th>{{join.travel_id.start}}</th>
               <th>{{join.travel_id.end}}</th>
               <th>{{join.travel_id.plan }}</th>
             </tr>
           {% endfor %}
-
        </tbody>
     </table>
-
-
-
+    <br>
     <a href="{% url 'add'%}">Add Travel Plan</a>
-
-
     <h3>Other User's Travel Plans</h3>
     <table>
         <thead>
@@ -58,7 +45,6 @@
              <th>Destination</th>
              <th>Travel Start Date</th>
              <th>Travel End Date</th>
-             <th>Plan</th>
              <th>Do you want to join?</th>
            </tr>
         </thead>
@@ -70,16 +56,13 @@
                    <th><a href="{% url 'travel' travel_id=plan.id%}">{{plan.destination}}</a></th>
                    <th>{{plan.start}}</th>
                    <th>{{plan.end}}</th>
-                   <th>{{plan.plan }}</th>
-                   <th><a href="">Join</a></th>
+                   <th><a href="{% url 'join' travel_id=plan.id%}">Join</a></th>
                  </tr>
-               {% endif %}
+              {% endif %}
             {% endfor %}
         </tbody>
     </table>
-
     <br>
     <a href="{% url 'logout'%}">Logout</a>
-
   </body>
 </html>

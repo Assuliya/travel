@@ -5,7 +5,7 @@
     <title>Travel Buddy</title>
   </head>
   <body>
-    <h1>Hello</h1>
+    <h2>Welcome!</h2>
     {% if messages %}
         <div class="errors">
           {% for message in messages %}
@@ -14,7 +14,7 @@
         </div>
     {% endif %}
     {% if request.session.user%}
-        <h2>User {{request.session.user}}! You're successfully logged in!</h2>
+        <h2>You're successfully logged in!</h2>
         <a href="{% url 'user' %}">My Page</a>
         <a href="{% url 'logout'%}">Logout</a>
     {% endif %}
@@ -38,6 +38,5 @@
           <input type="submit" value="Login">
        </form>
     {% endif %}
-
   </body>
 </html>

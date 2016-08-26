@@ -18,7 +18,7 @@ class UserManager(models.Manager):
             errors.append('Username can not be less than 3 characters')
         try:
             user = User.objects.get(alias = request.POST['alias'])
-            errors.append('This alias is already being used')
+            errors.append('This Username is already being used')
         except ObjectDoesNotExist:
             pass
         if len(errors) > 0:
@@ -58,13 +58,13 @@ class UserManager(models.Manager):
 
 
 class User(models.Model):
-    name = models.CharField(max_length=255)
-    alias = models.CharField(max_length=45)
-    pw_hash = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add = True)
-    updated_at = models.DateTimeField(auto_now = True)
-    objects = models.Manager()
-    manager = UserManager()
+      name = models.CharField(max_length=255)
+      alias = models.CharField(max_length=45)
+      pw_hash = models.CharField(max_length=255)
+      created_at = models.DateTimeField(auto_now_add = True)
+      updated_at = models.DateTimeField(auto_now = True)
+      objects = models.Manager()
+      manager = UserManager()
 
 class Travel(models.Model):
       destination = models.CharField(max_length=255)
