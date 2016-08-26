@@ -17,7 +17,7 @@ def user(request):
 
     joins = Join.objects.filter(user_id = request.session['user'])
 
-    
+
 
     context = {'travels':travels, 'user':user, 'other':other, 'joins': joins}
     return render(request, 'travel_plan/user.html', context)
@@ -85,7 +85,7 @@ def add_travel(request):
         print_messages(request, errors)
         return redirect(reverse('add'))
     creator = User.objects.get(id = request.session['user'])
-    travel = Travel.objects.create(user_id_join = creator, user_id = creator, destination=request.POST['destination'], plan=request.POST['plan'], start=request.POST['start'], end=request.POST['end'])
+    travel = Travel.objects.create(user_id = creator, destination=request.POST['destination'], plan=request.POST['plan'], start=request.POST['start'], end=request.POST['end'])
     return redirect(reverse('user'))
 
 def join(request, travel_id):
